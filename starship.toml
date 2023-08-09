@@ -1,40 +1,29 @@
 format = """
-$os\
-$username\
-[](bg:#DA627D fg:#9A348E)\
-$directory\
-[](fg:#DA627D bg:#FCA17D)\
-$git_branch\
-$git_status\
-$git_commit\
-[](fg:#FCA17D bg:#86BBD8)\
-$c\
-$cmake\
-$elixir\
-$elm\
-$golang\
-$gradle\
-$haskell\
-$java\
-$julia\
-$nodejs\
-$nim\
-$rust\
-$python\
-$helm\
-$lua\
-$rlang\
-$swift\
-$scala\
-[](fg:#86BBD8 bg:#06969A)\
-$conda\
-$docker_context\
-$sudo\
-[ ](fg:#06969A)\
-
+[$os](bg:seperators fg:white)\
+[](bg:background fg:seperators)\
+([$username](bg:background)[](bg:background fg:seperators))\
+([$directory](bg:background fg:blue))\
+([](bg:background fg:seperators)[$git_branch$git_status$git_commit](bg:background fg:yellow))\
+([](bg:background fg:seperators)[$c$cmake$elixir$elm$golang$gradle$haskell$java$julia$nodejs$nim$rust$python$helm$lua$rlang$swift$scala](bg:background fg:blue))\
+([](bg:background fg:seperators)[$docker_context$sudo](bg:background))\
+[ ](fg:background)\
 """
 
-right_format = """$cmd_duration"""
+right_format = """(
+[](fg:background)\
+([$status](bg:background)[](bg:background fg:seperators))\
+([$cmd_duration](bg:background fg:yellow)[](bg:background fg:seperators))\
+([$conda](bg:background fg:blue)[](bg:background fg:seperators))\
+[$time](bg:background)\
+([󰇙](bg:background fg:seperators)[$hostname](bg:background fg:red))\
+)
+"""
+
+palette = 'basic'
+[palettes.basic]
+white = '#222222'
+background = '#444444'
+seperators = '#999999'
 
 # Disable the blank line at the start of the prompt
 # add_newline = false
@@ -43,42 +32,71 @@ right_format = """$cmd_duration"""
 # and use the os module below
 [username]
 show_always = false
-style_user = "bg:#9A348E"
-style_root = "bg:#9A348E"
-format = '[$user ]($style)'
+style_user = "bg:background"
+style_root = "fg:red bold bg:background"
+format = '([ $user ]($style))'
 disabled = false
 
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
 [os]
-style = "bg:#9A348E"
-format = "[ $symbol]($style)"
+style = "bg:background"
+format = " $symbol"
 disabled = false # Disabled by default
 
 [os.symbols]
-Arch = "󰣇 "
+Alpaquita = " "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
 Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
 Linux = " "
-Macos = " "
-Raspbian = " "
-Ubuntu = " "
+Mabox = " "
+Macos = " "
 Manjaro = " "
-Unknown = " "
-Windows = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
 
 [directory]
-style = "bg:#DA627D"
-format = "[ $path ]($style)"
-truncation_length = 3
+format = " $path "
+truncation_length = 99
 truncation_symbol = "…/"
 
 # Here is how you can shorten some long paths by text replacement
 # similar to mapped_locations in Oh My Posh:
 [directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
+"Documents" = " 󰈙 "
+"Downloads" = "  "
+"Music" = "  "
+"Pictures" = "  "
 # Keep in mind that the order matters. For example:
 # "Important Documents" = " 󰈙 "
 # will not be replaced, because "Documents" was already substituted before.
@@ -87,28 +105,23 @@ truncation_symbol = "…/"
 
 [c]
 symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [docker_context]
 symbol = " "
-style = "bg:#06969A"
-format = '[ $symbol $context ]($style) $path'
+format = ' $symbol $context  $path'
 
 [elixir]
 symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [elm]
 symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [git_branch]
 symbol = ""
-style = "bg:#FCA17D"
-format = '[ $symbol $branch ]($style)'
+format = ' $symbol $branch '
 
 [git_status]
 ahead = "⇡${count}"
@@ -117,77 +130,74 @@ behind = "⇣${count}"
 modified = "!${count}"
 untracked = "?${count}"
 staged = "+${count}"
-style = "bg:#FCA17D"
-format = '[$all_status$ahead_behind ]($style)'
+format = '$all_status$ahead_behind '
 
 [golang]
 symbol = " "
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [gradle]
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [haskell]
 symbol = " "
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [java]
 symbol = " "
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [julia]
 symbol = " "
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [nodejs]
 symbol = ""
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [nim]
 symbol = "󰆥 "
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [rust]
 symbol = ""
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [scala]
 symbol = " "
-style = "bg:#86BBD8 fg:#000000"
-format = '[ $symbol ($version) ]($style)'
+format = ' $symbol ($version) '
 
 [python]
 detect_extensions = ['py']
 python_binary = 'python3'
 symbol = ' '
-style = "bg:#86BBD8 fg:#000000"
-format = '[ ${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) ) ]($style)'
+format = ' ${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) ) '
 
 [conda]
-style = "bg:#06969A fg:#ffffff"
-format = '[ $symbol$environment ]($style)'
-ignore_base = false
+format = '( $environment )'
+ignore_base = true
 
 [status]
-style = 'bg:blue'
-symbol = '🔴 '
-success_symbol = '🟢 SUCCESS'
-format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+symbol = '✘'
+success_symbol = ''
+not_executable_symbol = ''
+not_found_symbol = '󰦀'
+sigint_symbol = '󱊈'
+signal_symbol = '󱐋'
+format = ' $symbol$signal_name$maybe_int '
 map_symbol = true
 disabled = false
 
 [time]
 disabled = false
-time_format = "%T" # https://docs.rs/chrono/0.4.7/chrono/format/strftime/index.html
+time_format = "%R" # https://docs.rs/chrono/0.4.7/chrono/format/strftime/index.html
 format = ' $time '
 
 [cmd_duration]
-format = '[](fg:yellow)[ $duration  ](bg:yellow fg:#33658A)'
+format = ' $duration   '
+
+[hostname]
+ssh_only = true
+format = ' $hostname '
+# trim_at = '.companyname.com'
+disabled = false
