@@ -6,6 +6,7 @@ $directory\
 [](fg:#DA627D bg:#FCA17D)\
 $git_branch\
 $git_status\
+$git_commit\
 [](fg:#FCA17D bg:#86BBD8)\
 $c\
 $cmake\
@@ -33,7 +34,7 @@ $sudo\
 
 """
 
-right_format = """[ ](fg:#33658A)[$time](bg:#33658A)$cmd_duration"""
+right_format = """$cmd_duration"""
 
 # Disable the blank line at the start of the prompt
 # add_newline = false
@@ -41,7 +42,7 @@ right_format = """[ ](fg:#33658A)[$time](bg:#33658A)$cmd_duration"""
 # You can also replace your username with a neat symbol like   or disable this
 # and use the os module below
 [username]
-show_always = true
+show_always = false
 style_user = "bg:#9A348E"
 style_root = "bg:#9A348E"
 format = '[$user ]($style)'
@@ -61,6 +62,7 @@ Linux = " "
 Macos = " "
 Raspbian = " "
 Ubuntu = " "
+Manjaro = " "
 Unknown = " "
 Windows = " "
 
@@ -109,6 +111,12 @@ style = "bg:#FCA17D"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
+ahead = "⇡${count}"
+diverged = "⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+modified = "!${count}"
+untracked = "?${count}"
+staged = "+${count}"
 style = "bg:#FCA17D"
 format = '[$all_status$ahead_behind ]($style)'
 
@@ -166,6 +174,15 @@ format = '[ ${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) ) ]($style)'
 [conda]
 style = "bg:#06969A fg:#ffffff"
 format = '[ $symbol$environment ]($style)'
+ignore_base = false
+
+[status]
+style = 'bg:blue'
+symbol = '🔴 '
+success_symbol = '🟢 SUCCESS'
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
 
 [time]
 disabled = false
@@ -173,4 +190,4 @@ time_format = "%T" # https://docs.rs/chrono/0.4.7/chrono/format/strftime/index.h
 format = ' $time '
 
 [cmd_duration]
-format = '[](fg:yellow bg:#33658A)[ $duration ](bg:yellow fg:#33658A)'
+format = '[](fg:yellow)[ $duration  ](bg:yellow fg:#33658A)'
